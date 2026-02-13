@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14/02 của bé iu 💖</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+
+  <body>
+  <audio id="bgMusic" loop>
+    <source src="./asset/nhac.mp3" type="audio/mp3" />
+  </audio>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    body {
+      overflow: hidden;
+      background: black;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+
+    .hidden {
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    h1,
+    h2 {
+      background: linear-gradient(to right, #ffd6f3, #cce6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    /* ===== TITLE ===== */
+
+    .valentine-title {
+      font-size: 68px;
+      animation: floatTitle 2.5s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    .valentine-title span {
+      background: linear-gradient(270deg, #ffd6f3, #cce6ff, #ffb3ec, #ffd6f3);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 6s ease infinite;
+      text-shadow:
+        0 0 25px rgba(255, 182, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatTitle {
+      from {
+        transform: translateY(-8px);
+      }
+
+      to {
+        transform: translateY(8px);
+      }
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .sunflower-container {
+      width: 200px;
+      height: 200px;
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: bloom 4s ease-out forwards;
+    }
+
+    @keyframes bloom {
+      0% {
+        transform: scale(0.2) rotate(-20deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.05) rotate(5deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .sunflower-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 15px rgba(255, 220, 0, 0.5));
+    }
+
+    .petals {
+      transform-origin: center;
+      animation: rotatePetals 25s linear infinite;
+    }
+
+    @keyframes rotatePetals {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .sunflower-center {
+      fill: #5d3a1a;
+      stroke: #3d2610;
+      stroke-width: 2;
+    }
+
+    #page2 {
+      justify-content: flex-start;
+      padding-top: 110px;
+    }
+
+    #page2 h2 {
+      font-size: 40px;
+      margin-bottom: 70px;
+    }
+
+    .options {
+      display: flex;
+      gap: 70px;
+      margin-top: 20px;
+    }
+
+    .box {
+      width: 300px;
+      height: 180px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(16px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 55px;
+      font-weight: 600;
+      transition: 0.5s;
+      box-shadow: 0 0 40px rgba(255, 182, 255, 0.5);
+    }
+
+    .box:hover {
+      transform: translateY(-15px) scale(1.07);
+      box-shadow: 0 0 60px #ffb3ec;
+    }
+
+    #content {
+      margin-top: 60px;
+      text-align: center;
+      max-width: 720px;
+      font-size: 24px;
+      line-height: 1.8;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .arrow {
+      font-size: 48px;
+      cursor: pointer;
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.25);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: spark 2s infinite;
+    }
+
+    @keyframes spark {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.4);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      animation: floatUp 5s linear forwards;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    #page3 {
+      background: radial-gradient(ellipse at center, #0a0a0a 0%, #000 100%);
+      perspective: 1000px;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .sparkle-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .sparkle-angel {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow: 0 -1.5px 0 0 white, 0 1.5px 0 0 white, -1.5px 0 0 0 white, 1.5px 0 0 0 white;
+      opacity: 0;
+      animation: sparkleBlink 4s infinite ease-in-out;
+    }
+
+    @keyframes sparkleBlink {
+
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(0.5);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    .scene {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      position: relative;
+      transition: transform 0.1s linear;
+    }
+
+    .falling-text {
+      position: absolute;
+      top: -10vh;
+      font-size: 4vmin;
+      color: #0ff;
+      white-space: nowrap;
+      animation: fall 8s linear forwards, hueShift 8s linear infinite;
+      transform-style: preserve-3d;
+      filter: hue-rotate(0deg);
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+
+    .falling-icon {
+      position: absolute;
+      top: -10vh;
+      font-size: 3.5vmin;
+      animation: fall 8s linear forwards;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    @keyframes hueShift {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10vh;
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        top: 120vh;
+        opacity: 0;
+      }
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      border: 2px solid #fff;
+      border-radius: 20px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.5);
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.5s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 182, 255, 0.3);
+      text-align: center;
+      position: relative;
+      transform: scale(0.8);
+      transition: 0.5s;
+    }
+
+    .modal-overlay.active .modal-box {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #ffb3ec;
+      transform: scale(1.2);
+    }
+
+    .modal-content {
+      font-size: 22px;
+      line-height: 1.6;
+      min-height: 100px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    /* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Trang 1 */
+  .valentine-title {
+    font-size: 36px;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .sunflower-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  /* Trang 2 */
+  .options {
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .box {
+    width: 80%;
+    height: 120px;
+    font-size: 42px;
+  }
+
+  #page2 h2 {
+    font-size: 28px;
+    text-align: center;
+    padding: 0 20px;
+  }
+}
+
+  </style>
+</head>
+
+
+  <canvas id="space"></canvas>
+
+  <div class="page" id="page1">
+    <h1 class="valentine-title"><span>Happy Valentine's Day</span> ✨</h1>
+
+    <div class="sunflower-container">
+      <svg class="sunflower-svg" viewBox="0 0 200 200">
+        <g class="petals">
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(0 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(30 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(60 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(90 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(120 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(150 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(180 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(210 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(240 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(270 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFD700" transform="rotate(300 100 100)" />
+          <ellipse cx="100" cy="50" rx="15" ry="45" fill="#FFC107" transform="rotate(330 100 100)" />
+        </g>
+        <circle class="sunflower-center" cx="100" cy="100" r="35" />
+        <circle cx="100" cy="100" r="25" fill="none" stroke="#4a2e12" stroke-dasharray="2,5" stroke-width="15" />
+      </svg>
+    </div>
+
+    <div class="arrow" onclick="nextPage()">➜</div>
+  </div>
+
+  <div class="page hidden" id="page2">
+    <h2>Nhấn Vào Đi Cục Dàng Ơi</h2>
+
+    <div class="options">
+      <div class="box" onclick="angel()">💘</div>
+      <div class="box" onclick="wish()">😘</div>
+      <div class="box" onclick="confess()">💌</div>
+    </div>
+
+    <div id="content"></div>
+  </div>
+
+  <div class="page hidden" id="page3">
+    <div class="back-btn" onclick="backToMenu()">Back</div>
+    <div class="sparkle-container" id="sparkles-angel"></div>
+    <div class="scene" id="scene"></div>
+  </div>
+
+  <div id="modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-box">
+      <div class="close-modal" onclick="closeModal(null)">×</div>
+      <div id="modal-content" class="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const title = document.querySelector(".valentine-title");
+    for (let i = 0; i < 8; i++) {
+      let s = document.createElement("div");
+      s.className = "sparkle";
+      s.style.top = Math.random() * 80 + "%";
+      s.style.left = Math.random() * 100 + "%";
+      s.style.animationDelay = Math.random() * 2 + "s";
+      title.appendChild(s);
+    }
+
+    const canvas = document.getElementById("space");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for (let i = 0; i < 250; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.6,
+        a: Math.random(),
+      });
+    }
+
+    let meteors = [];
+    function spawnMeteor() {
+      let count = 2 + Math.floor(Math.random() * 2);
+      for (let i = 0; i < count; i++) {
+        meteors.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height * 0.4,
+          length: 220,
+          speed: 6,
+          angle: Math.PI / 4,
+          opacity: 1,
+        });
+      }
+    }
+    spawnMeteor();
+    setInterval(spawnMeteor, 2500);
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bg.addColorStop(0, "#050510");
+      bg.addColorStop(1, "#0b0b25");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      stars.forEach((s) => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+        ctx.fill();
+        s.a += (Math.random() - 0.5) * 0.05;
+        s.a = Math.max(0.1, Math.min(1, s.a));
+      });
+
+      for (let i = 0; i < meteors.length; i++) {
+        let m = meteors[i];
+        let grad = ctx.createLinearGradient(
+          m.x,
+          m.y,
+          m.x - m.length * Math.cos(m.angle),
+          m.y - m.length * Math.sin(m.angle),
+        );
+        grad.addColorStop(0, "rgba(255,255,255," + m.opacity + ")");
+        grad.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y);
+        ctx.lineTo(
+          m.x - m.length * Math.cos(m.angle),
+          m.y - m.length * Math.sin(m.angle),
+        );
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        m.x += m.speed;
+        m.y += m.speed;
+        m.opacity -= 0.01;
+        if (m.y > canvas.height || m.opacity <= 0) {
+          meteors.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    function nextPage() {
+      page1.classList.add("hidden");
+      page2.classList.remove("hidden");
+      document.getElementById("bgMusic").play();
+    }
+    let angelIntervals = [];
+
+    function angel() {
+      page2.classList.add("hidden");
+      page3.classList.remove("hidden");
+      initAngelEffect();
+    }
+
+    function backToMenu() {
+      page3.classList.add("hidden");
+      page2.classList.remove("hidden");
+      stopAngelEffect();
+    }
+
+    const angelTexts = [
+      "Love You 3000 ❤️", "Happy Valentine 💘", "Bé Iu 😘", "I Love You ❤️",
+      "Mãi Bên Nhau Nhé 💑", "Hạnh Phúc Ngập Tràn ✨", "My Angel 👼", "Cục dàng của tui 😘",
+      "My Love 💖", "Endless Love 💞", "Ngọt Ngào 🍬", "Iu iu iu 🌷", "Only You 💞", "I Love You So Much 💑"
+    ];
+    const angelIcons = ["💖", "💘", "💝", "👼", "✨", "🏹", "😍", "💞"];
+
+    function initAngelEffect() {
+      const scene = document.getElementById("scene");
+      const sparkleContainer = document.getElementById("sparkles-angel");
+      scene.innerHTML = "";
+      sparkleContainer.innerHTML = "";
+
+
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle-angel";
+        s.style.top = `${Math.random() * 95}%`;
+        s.style.left = `${Math.random() * 95}%`;
+        s.style.animationDuration = `${3 + Math.random() * 3}s`;
+        s.style.animationDelay = `${Math.random() * 4}s`;
+        sparkleContainer.appendChild(s);
+      }
+      const interval = setInterval(() => {
+        if (scene.childElementCount < 40) {
+          const text = document.createElement("div");
+          text.className = "falling-text";
+          text.textContent = angelTexts[Math.floor(Math.random() * angelTexts.length)];
+          text.style.left = `${Math.random() * window.innerWidth}px`;
+          text.style.transform = `translateZ(${(Math.random() - 0.5) * 300}px)`;
+          scene.appendChild(text);
+          setTimeout(() => { if (text.parentElement) text.remove(); }, 6000);
+
+          const icon = document.createElement("div");
+          icon.className = "falling-icon";
+          icon.textContent = angelIcons[Math.floor(Math.random() * angelIcons.length)];
+          icon.style.left = `${Math.random() * window.innerWidth}px`;
+          icon.style.transform = `translateZ(${(Math.random() - 0.5) * 300}px)`;
+          scene.appendChild(icon);
+          setTimeout(() => { if (icon.parentElement) icon.remove(); }, 6000);
+        }
+      }, 300);
+      angelIntervals.push(interval);
+      const bgMusic = document.getElementById("bgMusic");
+    }
+
+    function stopAngelEffect() {
+      angelIntervals.forEach(clearInterval);
+      angelIntervals = [];
+      document.getElementById("scene").innerHTML = "";
+      document.getElementById("sparkles-angel").innerHTML = "";
+    }
+
+    document.addEventListener("mousemove", (e) => {
+      if (page3.classList.contains("hidden")) return;
+
+      const scene = document.getElementById("scene");
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const rotateY = (e.clientX - centerX) * 0.15;
+      const rotateX = -(e.clientY - centerY) * 0.15;
+      scene.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    document.addEventListener("touchmove", (e) => {
+      if (page3.classList.contains("hidden")) return;
+
+      const scene = document.getElementById("scene");
+      const touch = e.touches[0];
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const rotateY = (touch.clientX - centerX) * 0.15;
+      const rotateX = -(touch.clientY - centerY) * 0.15;
+      scene.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }, { passive: false });
+
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modal-content");
+    let typingTimeouts = [];
+
+    function showModal(htmlText) {
+      modal.classList.add("active");
+      modalContent.innerHTML = "";
+      typeEffect(modalContent, htmlText, 50);
+    }
+
+    function closeModal(e) {
+      if (e && e.target.id !== "modal") return;
+      modal.classList.remove("active");
+    }
+
+    async function typeEffect(element, html, speed) {
+      element.innerHTML = "";
+      let temp = document.createElement("div");
+      temp.innerHTML = html;
+      let nodes = Array.from(temp.childNodes);
+
+      for (let node of nodes) {
+        await typeNode(node, element, speed);
+      }
+    }
+
+    async function typeNode(node, parent, speed) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        let text = node.textContent;
+        let textNode = document.createTextNode("");
+        parent.appendChild(textNode);
+        for (let char of text) {
+          if (!modal.classList.contains("active")) return;
+          textNode.textContent += char;
+          await new Promise(r => setTimeout(r, speed));
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        let newEl = document.createElement(node.tagName);
+        Array.from(node.attributes).forEach(attr => newEl.setAttribute(attr.name, attr.value));
+        parent.appendChild(newEl);
+        let children = Array.from(node.childNodes);
+        for (let child of children) {
+          await typeNode(child, newEl, speed);
+        }
+      }
+    }
+
+    function wish() {
+      showModal(
+        "14.02.2026 Chúc cho bé iu có một ngày Valentine thật ngọt ngào và ấm áp. Mong rằng lúc nào Diễm cũng cảm thấy tràn đầy niềm vui và hạnh phúc. <br> May you find the love that feels like home. "
+      );
+    }
+
+    function confess() {
+      showModal(
+        "<div style='text-align:left; display:inline-block'>" +
+        "Sau này nắng có tắt<br>" +
+        "Mây kia có bạc màu<br>" +
+        "Xin tay người nắm chặt<br>" +
+        "Đừng để mình lạc nhau<br>" +
+        "</div>" +
+        "<div style='text-align:right; margin-top:10px; font-size:14px'>-Chuyện kể rằng có nàng và tôi-</div>"
+      );
+    }
+
+    function spawnHearts(n) {
+      for (let i = 0; i < n; i++) {
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💗";
+        h.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+
+</html> 
+
